@@ -89,8 +89,9 @@ def car2pol(x, y):  # cartesian to polar
 
 
 class TwoBodySystem(BodySystem):
-    def __init__(self, G=None, body1=None, body2=None):
+    def __init__(self, G=None, body1=None, body2=None, potential=None):
         super().__init__(G)
+        self.potential = potential
         self.bodies = [body1, body2]
         self.r_cg = self._calculate_cg()
         self.r = self.bodies[1].pos - self.bodies[0].pos
@@ -165,11 +166,17 @@ class TwoBodySystem(BodySystem):
     def _specific_mechanical_energy(self):
         return self.vr_module ** 2 / 2 + self.V_ef()
 
-    def V(self):
+    def V_Newton(self):
         return - self.mu/self.r_distance
+    
+    def V_log(self):
+        return - self.mu * np.log(self.r_distance)
 
     def V_ef(self):
-        return 1/2*(self.spec_angular_momemtum_module/self.r_distance)**2 + self.V()
+        if self.potential == 'Newton':
+            return 1/2*(self.spec_angular_momemtum_module/self.r_distance)**2 + self.V_Newton()
+        elif self.potential == 'log':
+            return 1/2*(self.spec_angular_momemtum_module/self.r_distance)**2 + self.V_log()
 
     def _specific_angular_momentum(self):
         return np.cross(self.r, self.v)

@@ -17,8 +17,6 @@ def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None):
     ax.plot(rx[0], ry[0], 'ro')#, rz[0], 'ro')
     ax.plot(0, 0, 'bo', markersize=14)# 0, 'bo', markersize=14)
 
-    ax.plot(rx, ry, 'k-')#, rz, 'k-')
-
     # Theoretical orbit
     if excen and mu and h and theta_fin:
         r_theo = theoretical_orbit(h, mu, excen, np.linspace(0, theta_fin, rx.size))
@@ -28,6 +26,8 @@ def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None):
             theta_theo = np.linspace(np.pi, theta_fin + np.pi, rx.size)
             rx_theo, ry_theo, rz_theo = polar2cartesian(r_theo, theta_theo, 0)
         ax.plot(rx_theo, ry_theo, rz_theo, 'g--')
+
+    ax.plot(rx, ry, 'k--')#, rz, 'k-')
 
     plt.legend(['Posicion inicial', 'Punto focal', 'Numérica', 'Teórica'])
     plt.title(title)

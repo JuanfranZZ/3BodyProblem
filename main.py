@@ -14,12 +14,10 @@ with open(planets_file) as file:
     # exec(f"{s} = body_decoder(planets['{s}'])")
 
 Tierra = body_decoder(cuerpos['planetas']['Tierra'])
-# Tierra.set_velocity(Tierra.vel*0.001)
-# Tierra.set_position(2*Tierra.pos)
 Tierra1 = body_decoder(cuerpos['planetas']['Tierra'])
 Tierra1.set_velocity(Tierra.vel*0.001)
 Tierra1.set_position(2*Tierra.pos)
-Tierra1.mass = Tierra.mass/2
+Tierra1.mass = Tierra.mass/4
 Tierra2 = body_decoder(cuerpos['planetas']['Tierra'])
 Tierra2.set_position([0, 0, 0])
 Tierra2.set_velocity([0, 0, 0])
@@ -32,7 +30,7 @@ G = constants["G"]["value"]
 # Jupiter Earth system
 theta0 = 0
 thetafin = 2*np.pi
-twoBodySystem = TwoBodySystem(G=G, body1=Tierra1, body2=Tierra2)
+twoBodySystem = TwoBodySystem(G=G, body1=Tierra1, body2=Tierra2, potential='Newton')
 r0 = twoBodySystem.r_distance
 vr_0 = twoBodySystem.vr_module
 h0 = twoBodySystem.spec_angular_momemtum_module
