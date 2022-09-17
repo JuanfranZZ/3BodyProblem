@@ -4,9 +4,9 @@ from aux_tools import polar2cartesian
 from dynamics import theoretical_orbit
 
 
-def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None):
+def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None, show=True):
     # 3d plot
-    fig = plt.figure(figsize=(10, 10))
+    fig = plt.figure(100, figsize=(10, 10))
     ax = fig.add_subplot(111)#, projection='3d')
 
     # ax.view_init(elev=90, azim=-90)
@@ -34,7 +34,8 @@ def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None):
 
     plt.show()
 
-    fig2 = plt.figure(figsize=(10, 10))
+    fig2 = plt.figure(101, figsize=(10, 10))
     error = np.sqrt((rx-rx_theo)**2 + (ry-ry_theo)**2)
     plt.plot(error)
-    plt.show()
+    if show:
+        plt.show()

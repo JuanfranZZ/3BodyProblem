@@ -37,6 +37,7 @@ h0 = twoBodySystem.spec_angular_momemtum_module
 mu = twoBodySystem.mu
 E = twoBodySystem.spec_mec_energy
 excen = twoBodySystem.eccentricity
+V_ef = twoBodySystem.Vef
 
 print("r0:", r0)
 print("vr_0:", vr_0)
@@ -44,23 +45,28 @@ print("h0:", h0)
 print("mu:", mu)
 print("E:", E)
 print("excentricidad:", excen)
+print("V_ef", V_ef)
+print("E - V_ef=", E-V_ef)
 
-# Calcular
+twoBodySystem.plot_Enery_potential()
+
+# Calcular Newton
 orbit = twoBodySystem.calculate_orbit(theta0, thetafin)
 r = orbit[0]
 theta = orbit[1]
 
 # pintar resultados
 # theta = np.linspace(theta0, thetafin, np.size(r))
+figr = plt.figure()
 plt.plot(r)
 plt.show()
 [rx, ry, rz] = polar2cartesian(r, theta, 0)
 title = "r0="+str(r0)+"; v0="+str(vr_0)
 plot(rx, ry, rz, title=title, excen=excen, h=h0, mu=mu, theta_fin=thetafin)
-
+fig2D = plt.figure(1)
 plt.plot(twoBodySystem.orbit_1[0], twoBodySystem.orbit_1[1])
 plt.plot(twoBodySystem.orbit_1[0][0], twoBodySystem.orbit_1[1][0], 'bo')
 plt.plot(twoBodySystem.orbit_2[0], twoBodySystem.orbit_2[1])
 plt.plot(twoBodySystem.orbit_2[0][0], twoBodySystem.orbit_2[1][0], 'o', color='orange')
 plt.plot(0, 0, 'ro')
-plt.show()
+fig2D.savefig("2BNewton")
