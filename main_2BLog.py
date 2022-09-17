@@ -15,14 +15,14 @@ with open(planets_file) as file:
 
 Tierra = body_decoder(cuerpos['planetas']['Tierra'])
 Tierra1 = body_decoder(cuerpos['planetas']['Tierra'])
-Tierra1.set_velocity(Tierra.vel*0.001)
-Tierra1.set_position(2*Tierra.pos)
-Tierra1.set_velocity([0, 0.5, 0])
+Tierra1.set_velocity(30*Tierra.vel)
+Tierra1.set_position(Tierra.pos/10000000)
+Tierra1.set_velocity([0, 800, 0])
 Tierra1.set_position([1, 0, 0])
-Tierra1.mass = Tierra.mass/4
-Tierra1.mass = 1
+Tierra1.mass = Tierra.mass
+#Tierra1.mass = 1
 Tierra2 = body_decoder(cuerpos['planetas']['Tierra'])
-Tierra2.mass = 1
+#Tierra2.mass = 1
 Tierra2.set_position([0, 0, 0])
 Tierra2.set_velocity([0, 0, 0])
 Jupiter = body_decoder(cuerpos['planetas']['Jupiter'])
@@ -33,8 +33,8 @@ G = constants["G"]["value"]
 
 # Jupiter Earth system
 theta0 = 0
-thetafin = 4*np.pi
-twoBodySystem = TwoBodySystem(G=1, body1=Tierra1, body2=Tierra2, potential='Log')
+thetafin = 6*np.pi
+twoBodySystem = TwoBodySystem(G=G, body1=Tierra1, body2=Tierra2, potential='Log')
 r0 = twoBodySystem.r_distance
 vr_0 = twoBodySystem.vr_module
 h0 = twoBodySystem.spec_angular_momemtum_module
@@ -61,15 +61,18 @@ theta = orbit[1]
 
 # pintar resultados
 # theta = np.linspace(theta0, thetafin, np.size(r))
-plt.plot(r)
-plt.show()
+#plt.plot(r)
+#plt.show()
 [rx, ry, rz] = polar2cartesian(r, theta, 0)
-title = "r0="+str(r0)+"; v0="+str(h0/r0)
-plot(rx, ry, rz, title=title, excen=excen, h=h0, mu=mu, theta_fin=thetafin)
+#plot(rx, ry, rz, title=title, excen=excen, h=h0, mu=mu, theta_fin=thetafin, show=False)
 fig2D = plt.figure(1)
+title = "r0="+str(r0)+"; v0="+str(h0/r0)
+plt.title(title)
+twoBodySystem.update_orbit(theta0, thetafin)
 plt.plot(twoBodySystem.orbit_1[0], twoBodySystem.orbit_1[1])
 plt.plot(twoBodySystem.orbit_1[0][0], twoBodySystem.orbit_1[1][0], 'bo')
 plt.plot(twoBodySystem.orbit_2[0], twoBodySystem.orbit_2[1])
 plt.plot(twoBodySystem.orbit_2[0][0], twoBodySystem.orbit_2[1][0], 'o', color='orange')
 plt.plot(0, 0, 'ro')
+plt.show()
 fig2D.savefig("2BLog")

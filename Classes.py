@@ -155,6 +155,16 @@ class TwoBodySystem(BodySystem):
         sol_theta = sol.t
         return sol_r, sol_theta
 
+    def update_orbit(self, theta0, thetafin):
+        self.rel_polar_orbit_2 = self.calculate_orbit(theta0, thetafin)
+        self.rel_polar_cg = self.cg_percentaje * self.rel_polar_orbit_2[0], self.rel_polar_orbit_2[1]
+
+        self.rel_orbit_2 = pol2car(self.rel_polar_orbit_2[0], self.rel_polar_orbit_2[1])
+        self.rel_cg = pol2car(self.rel_polar_cg[0], self.rel_polar_cg[1])
+
+        # respect to CG (_recalculate_orbit_cg)
+        self.orbit_1, self.orbit_2 = self._recalculate_orbit_cg()
+
     def _calculate_cg(self):
         cg = 0
         total_mass = 0
@@ -186,7 +196,7 @@ class TwoBodySystem(BodySystem):
         if self.potential == 'Newton':
             return 1/2*(h/r_mod)**2 + self.V_Newton(r_mod)
         elif self.potential == 'Log':
-            return 1/2*(h/r_mod)**2 + self.V_log(r_mod)
+            return 1/2*(h/r_mod)**2 + self.V_log(r_mod) # * 1/2*np.linalg.norm(self.v)**2
         else:
             print("Error choosing potential name: Newton or Log")
 
@@ -244,6 +254,6 @@ class TwoBodySystem(BodySystem):
             plt.axis([-100, r_point2[0]/1e5, min(f(r)), E])
         plt.xlabel('r')
         plt.legend()
-        # plt.show()
+        plt.show()
         fig_energy.savefig(f'Energy_Vef_{self.potential}')
 
