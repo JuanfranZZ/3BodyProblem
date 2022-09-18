@@ -13,7 +13,7 @@ def CJ(x, y, z, mu):
     r1 = np.sqrt((x + mu2) ** 2 + y ** 2 + z ** 2)
     r2 = np.sqrt((x - mu1) ** 2 + y ** 2 + z ** 2)
 
-    CJ = x ** 2 + y ** 2 + 2 * (mu1 * np.log(r1) + mu2 * np.log(r2))
+    CJ = x ** 2 + y ** 2 - 2 * (mu1 * np.log(r1) + mu2 * np.log(r2))
     return CJ
 
 
@@ -47,8 +47,9 @@ if __name__ == "__main__":
     # Lagrange contours
 
     fig = plt.figure(1)
+    plt.title(f"CJ with $\mu$ = {mu}")
     # plt.contour(x, y, CJ_general, levels=1000)
-    cLagrange = plt.contour(xx, yy, CJ_general, levels=[CJ_Lagrange], cmap=cm.Set1, zorder=-1)
+    cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[1::-1], cmap=cm.Set1, zorder=-1)
     c = plt.contour(xx, yy, CJ_general, levels=[1, 2], cmap=cm.ocean)
     plt.clabel(cLagrange, inline=True)
     plt.clabel(c, inline=True)
@@ -67,7 +68,8 @@ if __name__ == "__main__":
 
     plt.scatter(Lx, Ly, marker='.', color='b', zorder=1)
     try:
-        plt.text(Lx[0] - 0.05, Ly[0] - 0.15, r'L$_1$')
+        for ii in range(Lx.size):
+            plt.text(Lx[ii] - 0.05, Ly[ii] - 0.15, f'L$_{ii}$')
     except:
         plt.text(Lx - 0.05, Ly - 0.15, r'L$_1$')
 

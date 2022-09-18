@@ -6,12 +6,14 @@ from scipy import optimize
 
 
 def f1(x, mu):
-    return x + (1 - mu) / (x + mu) + mu / (x - 1 + mu)
+    return x - (1 - mu) * (x+mu) / (x + mu)**2 - mu * (x - 1 + mu) / (x - 1 + mu)**2
 
 
 def LagrangePoints(mu):
     L1 = (optimize.newton(f1, 0, args=(mu,), maxiter=1000000), 0)
-    result = L1
+    L2 = (1 / 2 - mu, np.sqrt(3) / 2)
+    L3 = (1 / 2 - mu, -np.sqrt(3) / 2)
+    result = L1, L2, L3
     return result
 
 
@@ -51,4 +53,4 @@ if __name__=="__main__":
         plt.grid(True)
 
         plt.legend()
-        fig.savefig('Log LagrangeEulerCollinearNewton')
+        fig.savefig('LagrangeEulerCollinearLog')
