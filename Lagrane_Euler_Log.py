@@ -5,14 +5,14 @@ from matplotlib import pyplot as plt
 from scipy import optimize
 
 
-def f1(x, mu):
+def f3(x, mu): # f3 for convention
     return x - (1 - mu) * (x+mu) / (x + mu)**2 - mu * (x - 1 + mu) / (x - 1 + mu)**2
 
 
 def LagrangePoints(mu):
-    L1 = (optimize.newton(f1, 0, args=(mu,), maxiter=1000000), 0)
-    L2 = (1 / 2 - mu, np.sqrt(3) / 2)
-    L3 = (1 / 2 - mu, -np.sqrt(3) / 2)
+    L3 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
+    L1 = (1 / 2 - mu, np.sqrt(3) / 2)
+    L2 = (1 / 2 - mu, -np.sqrt(3) / 2)
     result = L1, L2, L3
     return result
 
@@ -21,7 +21,7 @@ if __name__=="__main__":
 
     mu = np.linspace(0.01, 0.5, 100)
 
-    L1 = np.array([optimize.newton(f1, 0, args=(xx,), maxiter=1000000) for xx in mu])
+    L1 = np.array([optimize.newton(f3, 0, args=(xx,), maxiter=1000000) for xx in mu])
 
     savefig = True
     plot = True

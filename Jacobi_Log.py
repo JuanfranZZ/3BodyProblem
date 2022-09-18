@@ -18,14 +18,14 @@ def CJ(x, y, z, mu):
 
 
 if __name__ == "__main__":
-    mu = 0.33
+    mu = 0.3
 
-    x = np.linspace(-1, 1, 1000)
-    y = np.linspace(-1, 1, 1000)
+    x = np.linspace(-2, 2, 1000)
+    y = np.linspace(-2, 2, 1000)
 
     xx, yy = np.meshgrid(x, y)
 
-    CJ_general = CJ(xx, yy, 0, mu)
+    CJ_general = np.round(CJ(xx, yy, 0, mu),4)
 
     Ls = LagrangePoints(mu)
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     fig = plt.figure(1)
     plt.title(f"CJ with $\mu$ = {mu}")
     # plt.contour(x, y, CJ_general, levels=1000)
-    cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[1::-1], cmap=cm.Set1, zorder=-1)
+    cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[1:], cmap=cm.Set1, zorder=-1)
     c = plt.contour(xx, yy, CJ_general, levels=[1, 2], cmap=cm.ocean)
     plt.clabel(cLagrange, inline=True)
     plt.clabel(c, inline=True)
@@ -68,12 +68,12 @@ if __name__ == "__main__":
 
     plt.scatter(Lx, Ly, marker='.', color='b', zorder=1)
     try:
-        for ii in range(Lx.size):
-            plt.text(Lx[ii] - 0.05, Ly[ii] - 0.15, f'L$_{ii}$')
+        plt.text(Lx[0] - 0.05, Ly[0] - 0.15, r'L$_1$')
+        plt.text(Lx[1] - 0.05, Ly[1] + 0.05, r'L$_2$')
+        plt.text(Lx[2] - 0.05, Ly[2] - 0.15, r'L$_3$')
     except:
         plt.text(Lx - 0.05, Ly - 0.15, r'L$_1$')
 
     plt.axis('off')
     plt.axis('equal')
-
     fig.savefig('CJ_contour_LagrangePoints_Log')
