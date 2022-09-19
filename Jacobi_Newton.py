@@ -70,3 +70,25 @@ if __name__=="__main__":
     plt.axis('equal')
 
     fig.savefig('CJ_contour_LagrangePoints_Newton')
+
+    fig2 = plt.figure(2)  # contronos
+
+    c = plt.contour(xx, yy, CJ_general, levels=[3, 3.5, 4, 4.5, 5], cmap=cm.ocean)
+    plt.clabel(c, inline=True)
+
+    # General contours
+    plt.contour(xx, yy, CJ_general, levels=30)
+
+    # masses
+    s1 = 100*(1-mu)
+    s2 = 100*mu
+
+    plt.scatter([-mu], [0], s=s1, color='grey', zorder=1)
+    plt.text(-mu-0.1, -0.15, r'$m_1$')
+    plt.scatter([1-mu], [0], s=s2, color='darkgrey', zorder=1)
+    plt.text(1-mu-0.1, -0.15, r'$m_2$')
+
+    plt.axis('off')
+    plt.axis('equal')
+
+    fig2.savefig('CJ_contours_LagrangePoints_Newton')

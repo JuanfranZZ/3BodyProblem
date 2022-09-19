@@ -31,8 +31,11 @@ def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None, show
 
     plt.legend(['Posicion inicial', 'Punto focal', 'Numérica', 'Teórica'])
     plt.title(title)
+    plt.xlabel("x")
+    plt.ylabel("y")
     if show:
         plt.show()
+    fig.savefig("Theorical_vs_Numerical")
 
     fig2 = plt.figure(101, figsize=(10, 10))
     error = np.sqrt((rx-rx_theo)**2 + (ry-ry_theo)**2)

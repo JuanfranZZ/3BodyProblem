@@ -13,7 +13,7 @@ def LagrangePoints(mu):
     L3 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
     L1 = (1 / 2 - mu, np.sqrt(3) / 2)
     L2 = (1 / 2 - mu, -np.sqrt(3) / 2)
-    result = L1, L2, L3
+    result = [L1, L2, L3]
     return result
 
 
@@ -21,18 +21,18 @@ if __name__=="__main__":
 
     mu = np.linspace(0.01, 0.5, 100)
 
-    L1 = np.array([optimize.newton(f3, 0, args=(xx,), maxiter=1000000) for xx in mu])
+    L3 = np.array([optimize.newton(f3, 0, args=(xx,), maxiter=1000000) for xx in mu])
 
     savefig = True
     plot = True
 
     if savefig:
         fig = plt.figure(3)
-        plt.plot(mu, L1)
-        plt.title(r'L1($\mu$)')
+        plt.plot(mu, L3)
+        plt.title(r'L3($\mu$)')
         plt.grid(True)
         plt.xlabel(r'$\mu$')
-        fig.savefig('Log_L1_mu')
+        fig.savefig('Log_L3_mu')
 
     if plot:
 
@@ -41,7 +41,7 @@ if __name__=="__main__":
         plt.xlim(-2, 2)
         plt.ylim(0, 0.5)
 
-        plt.plot(L1, mu, 'o', ms=2, label='L1')
+        plt.plot(L3, mu, 'o', ms=2, label='L1')
 
         # Esto está bien?
         plt.plot(-mu, mu, 'o', color='grey', ms=5, label='m1')
@@ -54,3 +54,29 @@ if __name__=="__main__":
 
         plt.legend()
         fig.savefig('LagrangeEulerCollinearLog')
+
+    mu = 0.3
+    Ls = LagrangePoints(mu)
+
+    if plot:
+
+        fig = plt.figure(5)
+        plt.xlim(-1, 1)
+        plt.ylim(-1, 1)
+
+        for ii in range(len(Ls)):
+            plt.plot(Ls[ii][0], Ls[ii][1], 'o', color='b')
+            plt.text(Ls[ii][0]+0.005, Ls[ii][1]+0.005, f"$L_{ii+1}$")
+
+        plt.plot(-mu, 0, 'o', color='grey', ms=(1-mu)*10, label='m1')
+        plt.text(-mu, 0, "$m_1$")
+        plt.plot(1-mu, 0, 'o', color='darkgrey', ms=mu*10, label='m2')
+        plt.text(1-mu, 0, "$m_2$")
+        plt.plot(0, 0, 'x', color='red')
+        plt.text(0, 0, "CG")
+        plt.title(f'Lagrange Points $V_{{Log}}$, $\mu={mu}$')
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.grid()
+        plt.show()
+        fig.savefig('LagrangeNewtonPoints_LogPotential')

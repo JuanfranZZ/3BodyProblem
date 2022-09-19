@@ -48,7 +48,6 @@ if __name__ == "__main__":
 
     fig = plt.figure(1)
     plt.title(f"CJ with $\mu$ = {mu}")
-    # plt.contour(x, y, CJ_general, levels=1000)
     cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[1:], cmap=cm.Set1, zorder=-1)
     c = plt.contour(xx, yy, CJ_general, levels=[1, 2], cmap=cm.ocean)
     plt.clabel(cLagrange, inline=True)
