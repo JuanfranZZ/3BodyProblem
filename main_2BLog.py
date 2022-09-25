@@ -2,7 +2,8 @@ import json
 import numpy as np
 from matplotlib import pyplot as plt
 from plotting import plot, polar2cartesian
-from Classes import TwoBodySystem, body_decoder, constant_decoder
+from Bodies import body_decoder, constant_decoder
+from Dynamics_2Bodies import TwoBodySystem
 
 # leer fichero de planetas
 planets_file = r"bodies.json"

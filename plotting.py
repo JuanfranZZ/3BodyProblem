@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 from aux_tools import polar2cartesian
-from dynamics import theoretical_orbit
+from Dynamics_2Bodies import theoretical_orbit
 
 
 def plot(rx, ry, rz, title="", excen=None, mu=None, h=None, theta_fin=None, show=True):

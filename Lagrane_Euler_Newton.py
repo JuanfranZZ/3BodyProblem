@@ -30,8 +30,8 @@ def LagrangePoints(mu):
 if __name__ == "__main__":
     mu = np.linspace(0.01, 0.5, 50)
 
-    L3 = np.array([optimize.newton(f3, 0, args=(xx,), maxiter=1000000) for xx in mu])
-    L2 = np.array([optimize.newton(f2, 0, args=(xx,), maxiter=1000000) for xx in mu])
+    L3 = np.array([optimize.newton(f3, -xx-0.01, args=(xx,), maxiter=1000000) for xx in mu])
+    L2 = np.array([optimize.newton(f2, 1-xx+0.01, args=(xx,), maxiter=1000000) for xx in mu])
     L1 = np.array([optimize.newton(f1, 0, args=(xx,), maxiter=1000000) for xx in mu])
 
     savefig = True
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         plt.grid(True)
 
         plt.legend()
-        fig.savefig('Newton LagrangeEulerCollinearNewton')
+        fig.savefig('LagrangeEulerCollinearNewton')
 
     mu = 0.3
     Ls = LagrangePoints(mu)
@@ -105,3 +105,4 @@ if __name__ == "__main__":
         plt.grid()
         plt.show()
         fig.savefig('LagrangeNewtonPoints_NewtonPotential')
+

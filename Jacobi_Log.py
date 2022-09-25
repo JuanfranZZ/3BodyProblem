@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     fig = plt.figure(1)
     plt.title(f"CJ with $\mu$ = {mu}")
-    cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[1:], cmap=cm.Set1, zorder=-1)
+    cLagrange = plt.contour(xx, yy, CJ_general, levels=CJ_Lagrange[-2::-1], cmap=cm.Set1, zorder=-1)
     c = plt.contour(xx, yy, CJ_general, levels=[1, 2], cmap=cm.ocean)
     plt.clabel(cLagrange, inline=True)
     plt.clabel(c, inline=True)
@@ -66,12 +66,11 @@ if __name__ == "__main__":
     plt.text(1 - mu - 0.1, -0.15, r'$m_2$')
 
     plt.scatter(Lx, Ly, marker='.', color='b', zorder=1)
-    try:
-        plt.text(Lx[0] - 0.05, Ly[0] - 0.15, r'L$_1$')
-        plt.text(Lx[1] - 0.05, Ly[1] + 0.05, r'L$_2$')
-        plt.text(Lx[2] - 0.05, Ly[2] - 0.15, r'L$_3$')
-    except:
-        plt.text(Lx - 0.05, Ly - 0.15, r'L$_1$')
+    plt.text(Lx[0] - 0.05, Ly[0] - 0.15, r'L$_1$')
+    plt.text(Lx[1] + 0.05, Ly[1] - 0.05, r'L$_2$')
+    plt.text(Lx[2] - 0.2, Ly[2] - 0.05, r'L$_3$')
+    plt.text(Lx[3] - 0.05, Ly[3] + 0.05, r'L$_4$')
+    plt.text(Lx[4] - 0.05, Ly[4] - 0.15, r'L$_5$')
 
     plt.axis('off')
     plt.axis('equal')

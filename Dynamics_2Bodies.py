@@ -1,93 +1,11 @@
-# Inspired in Vallado, Fundamentals in Astrodynamics and applications 4th edition
-# Assumptions:
-# 1-The mass of the satellite is negligible compared to that
-#   of the attracting body. Reasonable for artificial satellites
-#   in the foreseeable future.
-# 2-The coordinate system chosen is inertial.
-# 3-Spherical bodies
-# 4-No other forces act on the system except for gravitational
-#   forces that act along a line joinning the centers of the two
-#   bodies.
-
-import numpy as np
-from scipy.integrate import solve_ivp
-from scipy import optimize
+from Bodies import *
 from matplotlib import pyplot as plt
+from aux_tools import pol2car
 
 
-class Body:
-    def __init__(self, name, mass, **kwargs):
-        self.name = name
-        self.mass = mass
-        try:
-            if "pos" in kwargs:
-                self.set_position(kwargs['pos'])
-            else:
-                self.pos = None
-            if "vel" in kwargs:
-                self.set_velocity(kwargs['vel'])
-            else:
-                self.vel = None
-        except Exception as e:
-            print(e)
-            pass
-
-    def set_position(self, position):
-        self.pos = np.array(position)
-
-    def set_velocity(self, velocity):
-        self.vel = np.array(velocity)
-
-
-def body_decoder(obj):
-    if "ecc" in obj:
-        e = obj["ecc"]
-        vel = obj["vel"]*np.sqrt(2/(1-e)-1) #perihelio vel
-    else:
-        vel = obj["vel"]
-    return Body(obj["name"], obj["mass"], pos=obj["pos"], vel=[0, vel, 0])
-
-
-def unidades_decoder(obj):
-    c = {}
-    for key, value in obj.items():
-        c[str(key)] = value
-    return c
-
-
-def constant_decoder(obj):
-    c = {}
-    for key, value in obj.items():
-        c[str(key)] = value
-    return c
-
-
-class BodySystem:
-    def __init__(self, G=None):
-        if G:
-            self.G = G
-        else:
-            # self.G = 6.673848*10**(-11) # Nm2/kg2
-            self.G = 6.673848*10**(-20)  # km^3/(kg*s^2)
-        self.bodies = []
-
-    def add_body(self, body):
-        self.bodies.append(body)
-
-    def remove_body(self, body):
-        self.bodies.remove(body)
-
-
-def pol2car(r, alpha):  # polar to cartesian
-    x = r * np.cos(alpha)
-    y = r * np.sin(alpha)
-    return np.array([x, y])
-
-
-def car2pol(x, y):  # cartesian to polar
-    r = np.sqrt(x**2 + y**2)
-    alpha = np.arctan2(y, x)
-    return np.array([r, alpha])
+def theoretical_orbit(h, mu, e, theta):
+    r = (h*h/mu)/(1+e*np.cos(theta))
+    return r
 
 
 class TwoBodySystem(BodySystem):
@@ -98,11 +16,12 @@ class TwoBodySystem(BodySystem):
         self.r_cg = self._calculate_cg()
         self.r = self.bodies[1].pos - self.bodies[0].pos
         self.r_distance = np.linalg.norm(self.r)
-        self.cg_percentaje = np.linalg.norm(self._calculate_cg() - body1.pos)/self.r_distance
+        self.cg_percentaje = np.linalg.norm(self._calculate_cg() - body1.pos) / self.r_distance
         self.v = self.bodies[1].vel - self.bodies[0].vel
         self.vr_module = np.linalg.norm(np.dot(self.r, self.v) / self.r_distance)
 
-        self.reduced_mass = np.prod([x.mass for x in self.bodies])/np.sum(x.mass for x in self.bodies)  # reduced mass from wikipedia
+        self.reduced_mass = np.prod([x.mass for x in self.bodies]) / np.sum(
+            x.mass for x in self.bodies)  # reduced mass from wikipedia
         self.mu = self.G * np.sum(x.mass for x in self.bodies)
         self.spec_angular_momemtum = self._specific_angular_momentum(self.r, self.v)
         self.spec_angular_momemtum_module = np.linalg.norm(self.spec_angular_momemtum)
@@ -131,7 +50,7 @@ class TwoBodySystem(BodySystem):
         r0 = self.r_distance
         drdt0 = self.vr_module  # radial velocity projection
         h = self.spec_angular_momemtum_module
-        u0 = [1/r0, drdt0/(-h)]
+        u0 = [1 / r0, drdt0 / (-h)]
 
         # theta_span = np.linspace(theta0, thetafin, int(1/self.get_tolerance()))
         theta_span = (theta0, thetafin)
@@ -151,7 +70,7 @@ class TwoBodySystem(BodySystem):
             return y
 
         sol = solve_ivp(dynamic, theta_span, u0, method='RK45', max_step=self.get_tolerance())
-        sol_r = 1/sol.y[0]
+        sol_r = 1 / sol.y[0]
         sol_theta = sol.t
         return sol_r, sol_theta
 
@@ -171,7 +90,7 @@ class TwoBodySystem(BodySystem):
         for x in self.bodies:
             cg += x.mass * x.pos
             total_mass += x.mass
-        return cg/total_mass
+        return cg / total_mass
 
     def _recalculate_orbit_cg(self):  # origin from cg
         orbit_2 = self.rel_orbit_2 - self.rel_cg
@@ -179,24 +98,24 @@ class TwoBodySystem(BodySystem):
         return np.array([orbit_1, orbit_2])
 
     def _orbit_eccentricity(self):
-        return np.sqrt(1 + 2*self.spec_angular_momemtum_module**2*self.spec_mec_energy/(self.mu**2))
+        return np.sqrt(1 + 2 * self.spec_angular_momemtum_module ** 2 * self.spec_mec_energy / (self.mu ** 2))
         # return np.linalg.norm(np.cross(self.v, self.spec_angular_momemtum)/self.mu - self.r/np.linalg.norm(self.r))
 
     def _specific_mechanical_energy(self, v, pot):
         return v ** 2 / 2 + pot
 
     def V_Newton(self, r_mod):
-        return - self.mu/r_mod
-    
+        return - self.mu / r_mod
+
     def V_log(self, r_mod):
         return self.mu * np.log(r_mod)
 
     def V_ef(self, r_mod):
         h = self.spec_angular_momemtum_module
         if self.potential == 'Newton':
-            return 1/2*(h/r_mod)**2 + self.V_Newton(r_mod)
+            return 1 / 2 * (h / r_mod) ** 2 + self.V_Newton(r_mod)
         elif self.potential == 'Log':
-            return 1/2*(h/r_mod)**2 + self.V_log(r_mod) # * 1/2*np.linalg.norm(self.v)**2
+            return 1 / 2 * (h / r_mod) ** 2 + self.V_log(r_mod)  # * 1/2*np.linalg.norm(self.v)**2
         else:
             print("Error choosing potential name: Newton or Log")
 
@@ -204,8 +123,8 @@ class TwoBodySystem(BodySystem):
         return np.cross(r, v)
 
     def plot_Enery_potential(self):
-        r0 = self.r_distance/1e6
-        rfin = self.r_distance*2
+        r0 = self.r_distance / 1e6
+        rfin = self.r_distance * 2
         r = np.linspace(r0, rfin, int(1e7))
         E = self.spec_mec_energy
         Vef = self.V_ef(r)
@@ -251,9 +170,8 @@ class TwoBodySystem(BodySystem):
         plt.plot(r, Vef, label='Vef')
         plt.plot(r, f(r), '--', label='Vef-E')
         if self.potential == "Log":
-            plt.axis([-100, r_point2[0]/1e5, min(f(r)), E])
+            plt.axis([-100, r_point2[0] / 1e5, min(f(r)), E])
         plt.xlabel('r')
         plt.legend()
         plt.show()
         fig_energy.savefig(f'Energy_Vef_{self.potential}')
-
