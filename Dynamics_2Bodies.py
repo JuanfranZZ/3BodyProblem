@@ -138,7 +138,7 @@ class TwoBodySystem(BodySystem):
             return sol
 
         def f2(x):
-            sol = E - self.V_ef(x)git
+            sol = E - self.V_ef(x)
             return sol
 
         if self.potential == "Newton":
