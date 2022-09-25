@@ -17,10 +17,10 @@ def f2(x, mu):
     return x - (1 - mu) / ((x + mu) ** 2) - mu / ((x - 1 + mu) ** 2)
 
 
-def LagrangePoints_Newton(mu):
-    L1 = (optimize.newton(f1, 0, args=(mu,), maxiter=1000000), 0)
-    L2 = (optimize.newton(f2, 0, args=(mu,), maxiter=1000000), 0)
-    L3 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
+def LagrangePoints_Kepler(mu):
+    L1 = (optimize.Kepler(f1, 0, args=(mu,), maxiter=1000000), 0)
+    L2 = (optimize.Kepler(f2, 0, args=(mu,), maxiter=1000000), 0)
+    L3 = (optimize.Kepler(f3, 0, args=(mu,), maxiter=1000000), 0)
     L4 = (1 / 2 - mu, np.sqrt(3) / 2)
     L5 = (1 / 2 - mu, -np.sqrt(3) / 2)
     result = L1, L2, L3, L4, L5
@@ -30,9 +30,9 @@ def LagrangePoints_Newton(mu):
 if __name__ == "__main__":
     mu = np.linspace(0.01, 0.5, 50)
 
-    L3 = np.array([optimize.newton(f3, -xx-0.01, args=(xx,), maxiter=1000000) for xx in mu])
-    L2 = np.array([optimize.newton(f2, 1-xx+0.01, args=(xx,), maxiter=1000000) for xx in mu])
-    L1 = np.array([optimize.newton(f1, 0, args=(xx,), maxiter=1000000) for xx in mu])
+    L3 = np.array([optimize.Kepler(f3, -xx-0.01, args=(xx,), maxiter=1000000) for xx in mu])
+    L2 = np.array([optimize.Kepler(f2, 1-xx+0.01, args=(xx,), maxiter=1000000) for xx in mu])
+    L1 = np.array([optimize.Kepler(f1, 0, args=(xx,), maxiter=1000000) for xx in mu])
 
     savefig = True
     plot = True
@@ -40,24 +40,27 @@ if __name__ == "__main__":
     if savefig:
         fig = plt.figure(1)
         plt.plot(mu, L3)
-        plt.title(r'L3($\mu$)')
+        plt.title(r'$V_{N} L_3(\mu)$')
         plt.grid(True)
         plt.xlabel(r'$\mu$')
-        fig.savefig('Newtonian_L3_mu')
+        plt.ylabel('x')
+        fig.savefig('Keplerian_L3_mu')
 
         fig = plt.figure(2)
         plt.plot(mu, L2)
-        plt.title(r'L2($\mu$)')
+        plt.title(r'$V_{N} L_2(\mu)$')
         plt.grid(True)
         plt.xlabel(r'$\mu$')
-        fig.savefig('Newtonian_L2_mu')
+        plt.ylabel('x')
+        fig.savefig('Keplerian_L2_mu')
 
         fig = plt.figure(3)
         plt.plot(mu, L1)
-        plt.title(r'L1($\mu$)')
+        plt.title(r'$V_{N} L_1(\mu)$')
         plt.grid(True)
         plt.xlabel(r'$\mu$')
-        fig.savefig('Newtonian_L1_mu')
+        plt.ylabel('x')
+        fig.savefig('Keplerian_L1_mu')
 
     if plot:
         fig = plt.figure(4)
@@ -74,14 +77,14 @@ if __name__ == "__main__":
 
         plt.ylabel(r'$\mu$')
         plt.xlabel('x')
-        plt.title('Newton Lagrange-Euler Collinear Points')
+        plt.title(r'$V_{N}$ Lagrange-Euler Collinear Points')
         plt.grid(True)
 
         plt.legend()
-        fig.savefig('LagrangeEulerCollinearNewton')
+        fig.savefig('LagrangeEulerCollinearKepler')
 
     mu = 0.3
-    Ls = LagrangePoints_Newton(mu)
+    Ls = LagrangePoints_Kepler(mu)
 
     if plot:
 
@@ -99,10 +102,10 @@ if __name__ == "__main__":
         plt.text(1 - mu, 0, "$m_2$")
         plt.plot(0, 0, 'x', color='red')
         plt.text(0, 0, "CG")
-        plt.title(f'Lagrange Points $V_N$, $\mu={mu}$')
+        plt.title(r'Lagrange Points $V_{N}$,'+f' $\mu={mu}$')
         plt.xlabel("x")
         plt.ylabel("y")
         plt.grid()
         plt.show()
-        fig.savefig('LagrangeNewtonPoints_NewtonPotential')
+        fig.savefig('LagrangeKeplerPoints_KeplerPotential')
 

@@ -2,9 +2,9 @@ from Bodies import BodySystem, Body
 from scipy.integrate import solve_ivp
 from matplotlib import pyplot as plt
 import numpy as np
-from Lagrane_Euler_Newton import LagrangePoints_Newton
+from Lagrane_Euler_Kepler import LagrangePoints_Kepler
 from Lagrane_Euler_Log import LagrangePoints_Log
-from Jacobi_Newton import CJ_Newton
+from Jacobi_Kepler import CJ_Kepler
 from Jacobi_Log import CJ_Log
 
 
@@ -37,7 +37,7 @@ class ThreeBodySystem(BodySystem):
             x_dot = _state[3]
             y_dot = _state[4]
             z_dot = _state[5]
-            if self.potential == 'Newton':
+            if self.potential == 'Kepler':
                 x_ddot = x + 2 * y_dot - ((1 - mu) * (x + mu)) / ((x + mu) ** 2 + y ** 2 + z ** 2) ** (3 / 2) \
                          - (mu * (x - (1 - mu))) / ((x - (1 - mu)) ** 2 + y ** 2 + z ** 2) ** (3 / 2)
                 y_ddot = y - 2 * x_dot - ((1 - mu) * y) / ((x + mu) ** 2 + y ** 2 + z ** 2) ** (3 / 2) \
@@ -69,8 +69,8 @@ class ThreeBodySystem(BodySystem):
         # plt.text(self.bodies[2].pos[0] / self.r_distance - self.r_distance / 2,
         # self.bodies[2].pos[1] / self.r_distance - self.r_distance / 10,
         # f"{self.bodies[2].pos / self.r_distance}")
-        if self.potential == "Newton":
-            Ls = LagrangePoints_Newton(self.mu)
+        if self.potential == "Kepler":
+            Ls = LagrangePoints_Kepler(self.mu)
         elif self.potential == "Log":
             Ls = LagrangePoints_Log(self.mu)
         for e, L in enumerate(Ls):
@@ -79,20 +79,21 @@ class ThreeBodySystem(BodySystem):
         plt.plot(orbit.y[0], orbit.y[1], color='blue')
         plt.xlabel("x")
         plt.ylabel("y")
+        plt.grid()
         plt.title(title)
         if plot:
             plt.show()
         if save:
-            name = "Sim_" + title.replace(", $\mu=$", "_mu_").replace(".", "_")
+            name = "Sim_" + title.replace(", $\mu=$", "_mu_").replace(".", "_").replace("$V_N$ ", "Kepler_").replace("Log ", "Log_")
             plt.savefig(name)
             print('saved '+name)
 
-        plt.xlim([min(orbit.y[0]), max(orbit.y[0])])
-        plt.ylim([min(orbit.y[1]), max(orbit.y[1])])
+        plt.xlim([min(orbit.y[0])-0.001, max(orbit.y[0])+0.001])
+        plt.ylim([min(orbit.y[1])-0.001, max(orbit.y[1])+0.001])
 
         if plot:
             plt.show()
         if save:
-            name = "Sim_focused_" + title.replace(", $\mu=$", "_mu_").replace(".", "_")
+            name = "Sim_focused_" + title.replace(", $\mu=$", "_mu_").replace(".", "_").replace("$V_N$ ", "Kepler_").replace("Log ", "Log_")
             plt.savefig(name)
             print('saved '+name)

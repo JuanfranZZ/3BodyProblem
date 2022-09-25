@@ -138,20 +138,20 @@ class TwoBodySystem(BodySystem):
             return sol
 
         def f2(x):
-            sol = E - self.V_ef(x)
+            sol = E - self.V_ef(x)git
             return sol
 
         if self.potential == "Newton":
             f = f1
             minimum = optimize.minimize(f, x0=r0, method="Nelder-Mead")
             m = minimum.x[0]
-            r_point1 = (optimize.newton(f, m - m / 2, maxiter=100000), 0)
-            r_point2 = (optimize.newton(f, m + r0 / 2, maxiter=100000), 0)
+            r_point1 = (optimize.Newton(f, m - m / 2, maxiter=100000), 0)
+            r_point2 = (optimize.Newton(f, m + r0 / 2, maxiter=100000), 0)
         elif self.potential == "Log":
             f = f2
             m = 12600
-            r_point1 = (optimize.newton(f, 5, maxiter=100000), 0)
-            r_point2 = (optimize.newton(f, 10, maxiter=100000), 0)
+            r_point1 = (optimize.Newton(f, 5, maxiter=100000), 0)
+            r_point2 = (optimize.Newton(f, 10, maxiter=100000), 0)
 
         preplot = False
 

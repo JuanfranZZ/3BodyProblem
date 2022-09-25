@@ -101,7 +101,7 @@ def Check_Stability_Lagrange_Points(mu):
 
 if __name__ == "__main__":
 
-    plot = True
+    plot = False
     save = True
 
     sol = Stability_Lagrange_Points(0.02)
@@ -116,69 +116,79 @@ if __name__ == "__main__":
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL1[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability Newton\ L_1$')
+    plt.title(r'Estabilidad $V_{N}\ L_1$')
     ax2.set_ylabel('conds')
-    plt.xlabel(r"$\mu$")
+    ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
     ax.legend(lns, labels, loc='right')
+    ax.grid()
     plt.savefig("Stability_Newton_L1")
-    plt.show()
+    if plot:
+        plt.show()
 
     fig, ax = plt.subplots()
     a1=ax.plot(mu, stabL2[:, :3],
             label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2=ax2.plot(mu, stabL2[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability Newton\ L_2$')
+    plt.title(r'Estabilidad $V_{N}\ L_2$')
     ax2.set_ylabel('conds')
-    plt.xlabel(r"$\mu$")
+    ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
     ax.legend(lns, labels, loc='right')
+    ax.grid()
     plt.savefig("Stability_Newton_L2")
-    plt.show()
+    if plot:
+        plt.show()
 
     fig, ax = plt.subplots()
     a1 = ax.plot(mu, stabL3[:, :3],
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL3[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability Newton\ L_3$')
+    plt.title(r'Estabilidad $V_{N}\ L_3$')
     ax2.set_ylabel('conds')
-    plt.xlabel(r"$\mu$")
+    ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
     ax.legend(lns, labels, loc='right')
+    ax.grid()
     plt.savefig("Stability_Newton_L3")
-    plt.show()
+    if plot:
+        plt.show()
 
     fig, ax = plt.subplots()
     a1 = ax.plot(mu, stabL4[:, :3],
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL4[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability Newton\ L_4$')
+    plt.title(r'Estabilidad $V_{N}\ L_4$')
     ax2.set_ylabel('conds')
-    plt.xlabel(r"$\mu$")
+    ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
     ax.legend(lns, labels, loc='right')
+    ax.grid()
     plt.savefig("Stability_Newton_L4")
-    plt.show()
+    if plot:
+        plt.show()
 
     fig, ax = plt.subplots()
     a1 = ax.plot(mu, stabL5[:, :3],
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL5[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability Newton\ L_5$')
+    plt.title(r'Estabilidad $V_{N}\ L_5$')
     ax2.set_ylabel('conds')
-    plt.xlabel(r"$\mu$")
+    ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
     ax.legend(lns, labels, loc='right')
+    ax.grid()
     plt.savefig("Stability_Newton_L5")
-    plt.show()
+    if plot:
+        plt.show()
 
 

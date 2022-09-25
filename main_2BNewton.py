@@ -31,7 +31,7 @@ G = constants["G"]["value"]
 # Jupiter Earth system
 theta0 = 0
 thetafin = 2*np.pi
-twoBodySystem = TwoBodySystem(G=G, body1=Tierra1, body2=Tierra2, potential='Newton')
+twoBodySystem = TwoBodySystem(G=G, body1=Tierra1, body2=Tierra2, potential='Kepler')
 r0 = twoBodySystem.r_distance
 vr_0 = twoBodySystem.vr_module
 h0 = twoBodySystem.spec_angular_momemtum_module
@@ -51,7 +51,7 @@ print("E - V_ef=", E-V_ef)
 
 # twoBodySystem.plot_Enery_potential()
 
-# Calcular Newton
+# Calcular Kepler
 orbit = twoBodySystem.calculate_orbit(theta0, thetafin)
 r = orbit[0]
 theta = orbit[1]
@@ -74,4 +74,4 @@ plt.text(0, 0, "CG")
 plt.title(title)
 plt.xlabel("x")
 plt.ylabel("y")
-fig2D.savefig("2BNewton")
+fig2D.savefig("2BKepler")

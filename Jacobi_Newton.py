@@ -3,10 +3,10 @@
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
-from Lagrane_Euler_Newton import LagrangePoints_Newton
+from Lagrane_Euler_Newton import LagrangePoints_Kepler
 
 
-def CJ_Newton(x, y, z, mu):
+def CJ_Kepler(x, y, z, mu):
     mu2 = mu
     mu1 = 1 - mu
 
@@ -25,9 +25,9 @@ if __name__ == "__main__":
 
     xx, yy = np.meshgrid(x, y)
 
-    CJ_general = CJ_Newton(xx, yy, 0, mu)
+    CJ_general = CJ_Kepler(xx, yy, 0, mu)
 
-    Ls = LagrangePoints_Newton(mu)
+    Ls = LagrangePoints_Kepler(mu)
 
     Lx, Ly = [], []
     for (xi, yi) in Ls:
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     Lx = np.array(Lx)
     Ly = np.array(Ly)
 
-    CJ_Lagrange = CJ_Newton(Lx, Ly, 0, mu)
+    CJ_Lagrange = CJ_Kepler(Lx, Ly, 0, mu)
 
     # Lagrange contours
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     plt.axis('off')
     plt.axis('equal')
 
-    fig.savefig('CJ_contour_LagrangePoints_Newton')
+    fig.savefig('CJ_contour_LagrangePoints_Kepler')
 
     fig2 = plt.figure(2)  # contronos
 
@@ -92,4 +92,4 @@ if __name__ == "__main__":
     plt.axis('off')
     plt.axis('equal')
 
-    fig2.savefig('CJ_contours_LagrangePoints_Newton')
+    fig2.savefig('CJ_contours_LagrangePoints_Kepler')
