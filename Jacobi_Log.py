@@ -3,10 +3,10 @@
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
-from Lagrane_Euler_Log import LagrangePoints
+from Lagrane_Euler_Log import LagrangePoints_Log
 
 
-def CJ(x, y, z, mu):
+def CJ_Log(x, y, z, mu):
     mu2 = mu
     mu1 = 1 - mu
 
@@ -25,9 +25,9 @@ if __name__ == "__main__":
 
     xx, yy = np.meshgrid(x, y)
 
-    CJ_general = np.round(CJ(xx, yy, 0, mu),4)
+    CJ_general = np.round(CJ_Log(xx, yy, 0, mu), 4)
 
-    Ls = LagrangePoints(mu)
+    Ls = LagrangePoints_Log(mu)
 
     Lx, Ly = [], []
     try:
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         Lx = Ls[0]
         Ly = Ls[1]
 
-    CJ_Lagrange = CJ(Lx, Ly, 0, mu)
+    CJ_Lagrange = CJ_Log(Lx, Ly, 0, mu)
 
     # Lagrange contours
 

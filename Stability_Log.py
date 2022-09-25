@@ -1,6 +1,6 @@
 # Stability of points
 import numpy as np
-from Lagrane_Euler_Log import LagrangePoints
+from Lagrane_Euler_Log import LagrangePoints_Log
 from matplotlib import pyplot as plt
 
 
@@ -23,7 +23,7 @@ def VNxy(x, y, mu):
 
 
 def Stability_Lagrange_Points(mu):
-    Ls = LagrangePoints(mu)
+    Ls = LagrangePoints_Log(mu)
     stab = np.zeros((len(Ls), 5))
     for ii, L in enumerate(Ls):
         stabxx = VNxx(L[0], L[1], mu)
@@ -43,7 +43,7 @@ def Check_Stability_Lagrange_Points(mu):
     conds_L4 = np.zeros((len(mu), 5))
     conds_L5 = np.zeros((len(mu), 5))
     for e, m in enumerate(mu):
-        Ls = LagrangePoints(m)
+        Ls = LagrangePoints_Log(m)
         conds_m = np.zeros((len(Ls), 5))
         for ii, L in enumerate(Ls):
             stabxx = VNxx(L[0], L[1], m)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL1[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability\ L_1$')
+    plt.title(r'$Stability Log\ L_1$')
     ax2.set_ylabel('conds')
     plt.xlabel(r"$\mu$")
     lns = a1 + a2
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2=ax2.plot(mu, stabL2[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability\ L_2$')
+    plt.title(r'$Stability Log\ L_2$')
     ax2.set_ylabel('conds')
     plt.xlabel(r"$\mu$")
     lns = a1 + a2
@@ -110,7 +110,7 @@ if __name__ == "__main__":
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL3[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability\ L_3$')
+    plt.title(r'$Stability Log\ L_3$')
     ax2.set_ylabel('conds')
     plt.xlabel(r"$\mu$")
     lns = a1 + a2
@@ -124,7 +124,7 @@ if __name__ == "__main__":
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL4[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability\ L_4$')
+    plt.title(r'$Stability Log\ L_4$')
     ax2.set_ylabel('conds')
     plt.xlabel(r"$\mu$")
     lns = a1 + a2
@@ -138,7 +138,7 @@ if __name__ == "__main__":
                  label=[r"$V_{xx}V_{yy}-V_{xy}^2$", r"$4(V_{xx}V_{yy}-V_{xy}^2)$", r"$(4-V_{xx}-V_{yy})^2$"])
     ax2 = ax.twinx()
     a2 = ax2.plot(mu, stabL5[:, 3:], '--', label=["cond1", "cond2"])
-    plt.title(r'$Stability\ L_5$')
+    plt.title(r'$Stability Log\ L_5$')
     ax2.set_ylabel('conds')
     plt.xlabel(r"$\mu$")
     lns = a1 + a2

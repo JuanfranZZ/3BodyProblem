@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import cm
-from Lagrane_Euler_Newton import LagrangePoints
+from Lagrane_Euler_Newton import LagrangePoints_Newton
 
 
 def f(x, y, mu):
@@ -26,7 +26,7 @@ def fy(x, y, mu):
 
 
 mu = 0.3
-Ls = LagrangePoints(mu)
+Ls = LagrangePoints_Newton(mu)
 n = 100
 
 for e, L in enumerate(Ls):

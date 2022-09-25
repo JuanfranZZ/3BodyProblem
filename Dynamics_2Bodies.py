@@ -1,4 +1,7 @@
-from Bodies import *
+from Bodies import BodySystem, Body
+from scipy.integrate import solve_ivp
+from scipy import optimize
+import numpy as np
 from matplotlib import pyplot as plt
 from aux_tools import pol2car
 

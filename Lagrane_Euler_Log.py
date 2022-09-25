@@ -9,7 +9,7 @@ def f3(x, mu):  # f3 for convention
     return x - (1 - mu) * (x + mu) / (x + mu) ** 2 - mu * (x - 1 + mu) / (x - 1 + mu) ** 2
 
 
-def LagrangePoints(mu):
+def LagrangePoints_Log(mu):
     if isinstance(mu, float):
         L3 = (optimize.newton(f3, -mu - 0.01, args=(mu,), maxiter=1000000), 0)
         L1 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     mu = np.linspace(0.01, 0.5, 100)
 
-    L1, L2, L3, L4, L5 = LagrangePoints(mu)
+    L1, L2, L3, L4, L5 = LagrangePoints_Log(mu)
 
     savefig = True
     plot = True
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         fig.savefig('LagrangeEulerCollinearLog')
 
     mu = 0.3
-    Ls = LagrangePoints(mu)
+    Ls = LagrangePoints_Log(mu)
 
     if plot:
 

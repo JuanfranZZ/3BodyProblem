@@ -17,7 +17,7 @@ def f2(x, mu):
     return x - (1 - mu) / ((x + mu) ** 2) - mu / ((x - 1 + mu) ** 2)
 
 
-def LagrangePoints(mu):
+def LagrangePoints_Newton(mu):
     L1 = (optimize.newton(f1, 0, args=(mu,), maxiter=1000000), 0)
     L2 = (optimize.newton(f2, 0, args=(mu,), maxiter=1000000), 0)
     L3 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         fig.savefig('LagrangeEulerCollinearNewton')
 
     mu = 0.3
-    Ls = LagrangePoints(mu)
+    Ls = LagrangePoints_Newton(mu)
 
     if plot:
 

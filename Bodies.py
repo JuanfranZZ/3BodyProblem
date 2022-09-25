@@ -10,9 +10,6 @@
 #   bodies.
 
 import numpy as np
-from scipy.integrate import solve_ivp
-from scipy import optimize
-from matplotlib import pyplot as plt
 
 
 class Body:
@@ -23,11 +20,11 @@ class Body:
             if "pos" in kwargs:
                 self.set_position(kwargs['pos'])
             else:
-                self.pos = None
+                self.pos = np.array([0,0,0])
             if "vel" in kwargs:
                 self.set_velocity(kwargs['vel'])
             else:
-                self.vel = None
+                self.vel = np.array([0,0,0])
         except Exception as e:
             print(e)
             pass
