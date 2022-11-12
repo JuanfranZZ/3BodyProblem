@@ -58,7 +58,6 @@ Z_rot = sol[:, 2]
 X_Iner = sol[:, 0]*np.cos(t) - sol[:, 1]*np.sin(t)
 Y_Iner = sol[:, 0]*np.sin(t) + sol[:, 1]*np.cos(t)
 Z_Iner = sol[:, 2]
-
 # Constant m1 and m2 Rotational Frame Locations for CR3BP Primaries
 m1_loc = [-mu, 0, 0]
 m2_loc = [(1-mu), 0, 0]
