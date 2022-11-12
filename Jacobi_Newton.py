@@ -18,7 +18,7 @@ def CJ_Kepler(x, y, z, mu):
 
 
 if __name__ == "__main__":
-    mu = 0.33
+    mu = 0.3
 
     x = np.linspace(-2, 2, 1000)
     y = np.linspace(-2, 2, 1000)

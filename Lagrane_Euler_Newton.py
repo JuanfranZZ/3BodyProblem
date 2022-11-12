@@ -18,9 +18,9 @@ def f2(x, mu):
 
 
 def LagrangePoints_Kepler(mu):
-    L1 = (optimize.Kepler(f1, 0, args=(mu,), maxiter=1000000), 0)
-    L2 = (optimize.Kepler(f2, 0, args=(mu,), maxiter=1000000), 0)
-    L3 = (optimize.Kepler(f3, 0, args=(mu,), maxiter=1000000), 0)
+    L1 = (optimize.newton(f1, 0, args=(mu,), maxiter=1000000), 0)
+    L2 = (optimize.newton(f2, 0, args=(mu,), maxiter=1000000), 0)
+    L3 = (optimize.newton(f3, 0, args=(mu,), maxiter=1000000), 0)
     L4 = (1 / 2 - mu, np.sqrt(3) / 2)
     L5 = (1 / 2 - mu, -np.sqrt(3) / 2)
     result = L1, L2, L3, L4, L5

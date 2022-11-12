@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
 from Lagrane_Euler_Log import LagrangePoints_Log
+from Lagrane_Euler_Newton import LagrangePoints_Kepler
 
 
 def CJ_Log(x, y, z, mu):
@@ -16,6 +17,16 @@ def CJ_Log(x, y, z, mu):
     CJ = x ** 2 + y ** 2 - 2 * (mu1 * np.log(r1) + mu2 * np.log(r2))
     return CJ
 
+def CJ_Kepler(x, y, z, mu):
+    mu2 = mu
+    mu1 = 1 - mu
+
+    r1 = np.sqrt((x + mu2) ** 2 + y ** 2 + z ** 2)
+    r2 = np.sqrt((x - mu1) ** 2 + y ** 2 + z ** 2)
+
+    CJ = x ** 2 + y ** 2 + 2 * (mu1 / r1 + mu2 / r2)
+    return CJ
+
 
 if __name__ == "__main__":
     mu = 0.3
@@ -25,9 +36,14 @@ if __name__ == "__main__":
 
     xx, yy = np.meshgrid(x, y)
 
-    CJ_general = np.round(CJ_Log(xx, yy, 0, mu), 4)
+    option = 'Newton'
 
-    Ls = LagrangePoints_Log(mu)
+    if option == 'Log':
+        CJ_general = np.round(CJ_Log(xx, yy, 0, mu), 4)
+        Ls = LagrangePoints_Log(mu)
+    elif option == 'Newton':
+        CJ_general = np.round(CJ_Kepler(xx, yy, 0, mu), 4)
+        Ls = LagrangePoints_Kepler(mu)
 
     Lx, Ly = [], []
     try:
@@ -74,4 +90,7 @@ if __name__ == "__main__":
 
     plt.axis('off')
     plt.axis('equal')
-    fig.savefig('CJ_contour_LagrangePoints_Log')
+    if option == 'Log':
+        fig.savefig('CJ_contour_LagrangePoints_Log')
+    elif option == 'Newton':
+        fig.savefig('CJ_contour_LagrangePoints_Newton')

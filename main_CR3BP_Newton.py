@@ -20,7 +20,7 @@ cuerpo2 = Body("Cuerpo2", mass=mMoon, pos=[a, 0, 0]) #mass=0.3, pos=[0.7, 0, 0])
 satelite = Body("cubesat", mass=10, pos=[50000, 0, 0], vel=[1.08, 3.18, 0]) #, pos=[0.2, np.sqrt(3)/2+0.001, 0])
 
 # adim
-mu = 0.02
+mu = 0.3
 tf = 30
 delta = np.array([0, 0.001, 0])
 
@@ -36,20 +36,6 @@ for e, L in enumerate(Ls_N):
     pos_satelite = np.array([L[0], L[1], 0]) + delta
     satelite = Body("cubesat", mass=10, pos=pos_satelite)
     CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Kepler")
-    CR3BP_N.plot_CR3BP(tf, title=f"$V_N$ L_{e+1}, $\mu=${mu}_x", save=True, plot=False)
-
-for e, L in enumerate(Ls_L):
-    pos_satelite = np.array([L[0], L[1], 0]) + delta
-    satelite = Body("cubesat", mass=10, pos=pos_satelite)
-    CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Log")
-    CR3BP_N.plot_CR3BP(tf, title=f"Log L_{e+1}, $\mu=${mu}_x", save=True, plot=False)
-
-delta = np.array([0.001, 0, 0])
-
-for e, L in enumerate(Ls_N):
-    pos_satelite = np.array([L[0], L[1], 0]) + delta
-    satelite = Body("cubesat", mass=10, pos=pos_satelite)
-    CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Kepler")
     CR3BP_N.plot_CR3BP(tf, title=f"$V_N$ L_{e+1}, $\mu=${mu}_y", save=True, plot=False)
 
 for e, L in enumerate(Ls_L):
@@ -57,5 +43,19 @@ for e, L in enumerate(Ls_L):
     satelite = Body("cubesat", mass=10, pos=pos_satelite)
     CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Log")
     CR3BP_N.plot_CR3BP(tf, title=f"Log L_{e+1}, $\mu=${mu}_y", save=True, plot=False)
+
+delta = np.array([0.001, 0, 0])
+
+for e, L in enumerate(Ls_N):
+    pos_satelite = np.array([L[0], L[1], 0]) + delta
+    satelite = Body("cubesat", mass=10, pos=pos_satelite)
+    CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Kepler")
+    CR3BP_N.plot_CR3BP(tf, title=f"$V_N$ L_{e+1}, $\mu=${mu}_x", save=True, plot=False)
+
+for e, L in enumerate(Ls_L):
+    pos_satelite = np.array([L[0], L[1], 0]) + delta
+    satelite = Body("cubesat", mass=10, pos=pos_satelite)
+    CR3BP_N = ThreeBodySystem(G=G, body1=cuerpo1, body2=cuerpo2, body3=satelite, potential="Log")
+    CR3BP_N.plot_CR3BP(tf, title=f"Log L_{e+1}, $\mu=${mu}_x", save=True, plot=False)
 
 
