@@ -67,7 +67,7 @@ def Check_Stability_Lagrange_Points(mu):
 
 if __name__ == "__main__":
 
-    plot = False
+    plot = True
     save = True
 
     sol = Stability_Lagrange_Points(0.02)
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
-    ax.legend(lns, labels, loc='right')
+    ax.legend(lns, labels, loc=(0.65, 0.2))
     ax.grid()
     plt.savefig("Stability_Log_L1")
     if plot:
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
-    ax.legend(lns, labels, loc='right')
+    ax.legend(lns, labels, loc=(0.65, 0.15))
     ax.grid()
     plt.savefig("Stability_Log_L2")
     if plot:
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
-    ax.legend(lns, labels, loc='right')
+    ax.legend(lns, labels, loc=(0.65, 0.55))
     ax.grid()
     plt.savefig("Stability_Log_L3")
     if plot:
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
-    ax.legend(lns, labels, loc='right')
+    ax.legend(lns, labels, loc=(0.05, 0.55))
     ax.grid()
     plt.savefig("Stability_Log_L4")
     if plot:
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     ax.set(xlabel=r"$\mu$")
     lns = a1 + a2
     labels = [l.get_label() for l in lns]
-    ax.legend(lns, labels, loc='right')
+    ax.legend(lns, labels, loc=(0.05, 0.55))
     ax.grid()
     plt.savefig("Stability_Log_L5")
     if plot:

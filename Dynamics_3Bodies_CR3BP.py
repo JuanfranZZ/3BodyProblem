@@ -2,9 +2,9 @@ from Bodies import BodySystem, Body
 from scipy.integrate import solve_ivp
 from matplotlib import pyplot as plt
 import numpy as np
-from Lagrane_Euler_Kepler import LagrangePoints_Kepler
+from Lagrane_Euler_Newton import LagrangePoints_Kepler
 from Lagrane_Euler_Log import LagrangePoints_Log
-from Jacobi_Kepler import CJ_Kepler
+from Jacobi_Newton import CJ_Kepler
 from Jacobi_Log import CJ_Log
 
 
